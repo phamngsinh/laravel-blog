@@ -7,64 +7,64 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-  protected $auth;
+    protected $auth;
 
-  /**
-   * Create a new authentication controller instance.
-   *
-   * @param  Guard  $auth
-   */
-  public function __construct(Guard $auth)
-  {
-	$this->auth = $auth;
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @param  Guard  $auth
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
 
-	$this->middleware('guest', ['except' => 'getLogout']);
-  }
+        $this->middleware('guest', ['except' => 'getLogout']);
+    }
 
-  /**
-   * Show the login form.
-   *
-   * @return Response
-   */
-  public function getLogin()
-  {
-	return view('auth.login');
-  }
+    /**
+     * Show the login form.
+     *
+     * @return Response
+     */
+    public function getLogin()
+    {
+        return view('auth.login');
+    }
 
-  /**
-   * Handle a login request.
-   *
-   * @param  Request  $request
-   * @return Response
-   */
-  public function postLogin(Request $request)
-  {
-	$this->validate($request, [
-	  'email' => 'required|email', 'password' => 'required',
-	]);
+    /**
+     * Handle a login request.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
 
-	$credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-	if ($this->auth->attempt($credentials, $request->has('remember'))) {
-	  return redirect()->intended('/auth/login');
-	}
+        if ($this->auth->attempt($credentials, $request->has('remember'))) {
+            return redirect()->intended('/auth/login');
+        }
 
-	return redirect('/auth/login')
-	  ->withInput($request->only('email', 'remember'))
-	  ->withErrors([
-		'email' => 'Invalid credentials.',
-	  ]);
-  }
+        return redirect('/auth/login')
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => 'Invalid credentials.',
+            ]);
+    }
 
-  /**
-   * Log the user out of the application.
-   *
-   * @return Response
-   */
-  public function getLogout()
-  {
-	$this->auth->logout();
+    /**
+     * Log the user out of the application.
+     *
+     * @return Response
+     */
+    public function getLogout()
+    {
+        $this->auth->logout();
 
-	return redirect('/auth/login');
-  }
+        return redirect('/auth/login');
+    }
 }

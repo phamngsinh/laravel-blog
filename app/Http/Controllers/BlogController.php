@@ -1,98 +1,31 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\Commands\BlogIndexData;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Post;
-use Carbon\Carbon;
+use App\Tag;
+use Illuminate\Support\Facades\Request;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-   public function index()
-  {
-    $posts = Post::where('published_at', '<=', Carbon::now())
-        ->orderBy('published_at', 'desc')
-        ->paginate(config('blog.posts_per_page'));
-
-    return view('blog.index', compact('posts'));
-  }
-
-  public function showPost($slug)
-  {
-    $post = Post::whereSlug($slug)->firstOrFail();
-
-    return view('blog.post')->withPost($post);
-  }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function index()
     {
-        //
+        $tag = Request::get('tag');
+        $data = $this->dispatch(new BlogIndexData($tag));
+        $layout = $tag ? Tag::layout($tag) : 'blog.layouts.index';
+
+        return view($layout, $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
+    public function showPost($slug)
     {
-        //
-    }
+        $post = Post::with('tags')->whereSlug($slug)->firstOrFail();
+        $tag = Request::get('tag');
+        if ($tag) {
+            $tag = Tag::whereTag($tag)->firstOrFail();
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view($post->layout, compact('post', 'tag'));
     }
 }
