@@ -3,10 +3,7 @@
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface PostRepository
+ * Interface UserRepository
  * @package namespace App\Repositories;
  */
-interface PostRepository extends RepositoryInterface {
-
-
-}
+interface UserRepository extends RepositoryInterface {}

@@ -21,8 +21,7 @@ class PostController extends Controller {
 	 */
 	public function index()
 	{
-        $posts = $this->repository->all();
-        dd($posts);
+
 	}
 
 	/**
