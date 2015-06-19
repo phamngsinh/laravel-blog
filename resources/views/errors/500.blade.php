@@ -40,8 +40,8 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">503</div>
-				<div class="text">Database Error</div>
+				<div class="title">500</div>
+				<div class="text">Internal Server Error</div>
 			</div>
 		</div>
 	</body>
