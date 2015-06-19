@@ -39,10 +39,10 @@ class Handler extends ExceptionHandler {
 	 * @param \Exception $e        	
 	 * @return \Illuminate\Http\Response
 	 */
-	public function render($request, Exception $e)
-	{
-		return parent::render($request, $e);
-	}
+	public function render($request,\Exception $e) {
+		$code = SystemCode::UNHANDLED_ERROR;
+		$message = $e->getMessage ();
+
 
 		if ($e instanceof AppException) {
 			return response ()->json ( buildResponseMessage ( $message, $e->getCode () ) );
