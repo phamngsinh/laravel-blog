@@ -1,8 +1,8 @@
 <?php
 namespace App\Commands;
 
-use App\Post;
-use App\Tag;
+use App\Entities\Post;
+use App\Entities\Tag;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 

@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Http\Controllers\Controller;
-use App\Post;
+use App\Entities\Post;
 
 class PostController extends Controller
 {

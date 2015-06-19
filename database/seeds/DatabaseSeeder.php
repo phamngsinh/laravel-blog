@@ -1,7 +1,7 @@
 <?php
 
-use App\Post;
-use App\Tag;
+use App\Entities\Post;
+use App\Entities\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +28,7 @@ class TagTableSeeder extends Seeder
         Tag::truncate();
         DB::table('post_tag_pivot')->truncate();
         for ($i = 0; $i < 5; $i++) {
-            $tag = new Tag;
+            $tag = new Tag();
             $tag->tag = $faker->words(1)[0];
             $tag->title = ucfirst($tag->tag);
             $tag->subtitle = $faker->sentence(mt_rand(10, 30));
@@ -60,7 +60,7 @@ class PostTableSeeder extends Seeder
                 if (mt_rand(1, 100) < 50) {
                     $postTags[] = $tags[1];
                 }
-                $post->syncTags($postTags);
+//                $post->syncTags($postTags);
             }
         }
     }
