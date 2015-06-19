@@ -25,13 +25,10 @@ Route::group([
     Route::post('admin/upload/folder', 'UploadController@createFolder');
     Route::delete('admin/upload/folder', 'UploadController@deleteFolder');
 });
-
 // Logging in and out
 Route::get('/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/auth/logout', 'Auth\AuthController@getLogout');
-
-
 Route::get('user/{id}/{user}', function($id,$name) {
   return $name;
 })->where(['name' => '[A-Za-z]+'],['id' => '[0-9]+']);
