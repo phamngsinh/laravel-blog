@@ -1,68 +1,71 @@
-<?php
-
-namespace Illuminate\Foundation\Console\Tinker\Presenters;
+<?php namespace Illuminate\Foundation\Console\Tinker\Presenters;
 
 use ReflectionClass;
 use ReflectionProperty;
 use Psy\Presenter\ObjectPresenter;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentModelPresenter extends ObjectPresenter
-{
-    /**
-     * Determine if the presenter can present the given value.
-     *
-     * @param  mixed  $value
-     * @return bool
-     */
-    public function canPresent($value)
-    {
-        return $value instanceof Model;
-    }
+class EloquentModelPresenter extends ObjectPresenter {
 
-    /**
-     * Get an array of Model object properties.
-     *
-     * @param  object  $value
-     * @param  \ReflectionClass  $class
-     * @param  int  $propertyFilter
-     * @return array
-     */
-    public function getProperties($value, ReflectionClass $class, $propertyFilter)
-    {
-        $attributes = array_merge($value->getAttributes(), $value->getRelations());
+	/**
+	 * Determine if the presenter can present the given value.
+	 *
+	 * @param  mixed  $value
+	 * @return bool
+	 */
+	public function canPresent($value)
+	{
+		return $value instanceof Model;
+	}
 
-        $visible = $value->getVisible();
+	/**
+	 * Get an array of Model object properties.
+	 *
+	 * @param  object  $value
+	 * @param  \ReflectionClass  $class
+	 * @param  int  $propertyFilter
+	 * @return array
+	 */
+	public function getProperties($value, ReflectionClass $class, $propertyFilter)
+	{
+		$attributes = array_merge($value->getAttributes(), $value->getRelations());
 
-        if (count($visible) === 0) {
-            $visible = array_diff(array_keys($attributes), $value->getHidden());
-        }
+		$visible = $value->getVisible();
 
-        if (!$this->showHidden($propertyFilter)) {
-            return array_intersect_key($attributes, array_flip($visible));
-        }
+		if (count($visible) === 0)
+		{
+			$visible = array_diff(array_keys($attributes), $value->getHidden());
+		}
 
-        $properties = [];
+		if ( ! $this->showHidden($propertyFilter))
+		{
+			return array_intersect_key($attributes, array_flip($visible));
+		}
 
-        foreach ($attributes as $key => $value) {
-            if (!in_array($key, $visible)) {
-                $key = sprintf('<protected>%s</protected>', $key);
-            }
+		$properties = [];
 
-            $properties[$key] = $value;
-        }
+		foreach ($attributes as $key => $value)
+		{
+			if ( ! in_array($key, $visible))
+			{
+				$key = sprintf('<protected>%s</protected>', $key);
+			}
 
-        return $properties;
-    }
+			$properties[$key] = $value;
+		}
 
-    /**
-     * Decide whether to show hidden properties, based on a ReflectionProperty filter.
-     *
-     * @param  int  $propertyFilter
-     * @return bool
-     */
-    protected function showHidden($propertyFilter)
-    {
-        return $propertyFilter & (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
-    }
+		return $properties;
+	}
+
+	/**
+	 * Decide whether to show hidden properties, based on a ReflectionProperty filter.
+	 *
+	 * @param  int  $propertyFilter
+	 * @return bool
+	 */
+	protected function showHidden($propertyFilter)
+	{
+		return $propertyFilter & (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE);
+	}
+
 }

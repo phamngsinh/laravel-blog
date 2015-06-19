@@ -24,7 +24,8 @@ class TagController extends Controller
     public function index()
     {
         $tags = Tag::all();
-
+        $all = Request::all();
+        dd($all);
         return view('admin.tag.index')
             ->withTags($tags);
     }

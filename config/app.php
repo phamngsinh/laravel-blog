@@ -136,6 +136,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+        'Prettus\Repository\Providers\RepositoryServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */

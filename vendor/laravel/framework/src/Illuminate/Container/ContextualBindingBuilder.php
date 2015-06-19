@@ -1,59 +1,58 @@
-<?php
-
-namespace Illuminate\Container;
+<?php namespace Illuminate\Container;
 
 use Illuminate\Contracts\Container\ContextualBindingBuilder as ContextualBindingBuilderContract;
 
-class ContextualBindingBuilder implements ContextualBindingBuilderContract
-{
-    /**
-     * The underlying container instance.
-     *
-     * @var \Illuminate\Container\Container
-     */
-    protected $container;
+class ContextualBindingBuilder implements ContextualBindingBuilderContract {
 
-    /**
-     * The concrete instance.
-     *
-     * @var string
-     */
-    protected $concrete;
+	/**
+	 * The underlying container instance.
+	 *
+	 * @var \Illuminate\Container\Container
+	 */
+	protected $container;
 
-    /**
-     * Create a new contextual binding builder.
-     *
-     * @param  \Illuminate\Container\Container  $container
-     * @param  string  $concrete
-     * @return void
-     */
-    public function __construct(Container $container, $concrete)
-    {
-        $this->concrete = $concrete;
-        $this->container = $container;
-    }
+	/**
+	 * The concrete instance.
+	 *
+	 * @var string
+	 */
+	protected $concrete;
 
-    /**
-     * Define the abstract target that depends on the context.
-     *
-     * @param  string  $abstract
-     * @return $this
-     */
-    public function needs($abstract)
-    {
-        $this->needs = $abstract;
+	/**
+	 * Create a new contextual binding builder.
+	 *
+	 * @param  \Illuminate\Container\Container  $container
+	 * @param  string  $concrete
+	 * @return void
+	 */
+	public function __construct(Container $container, $concrete)
+	{
+		$this->concrete = $concrete;
+		$this->container = $container;
+	}
 
-        return $this;
-    }
+	/**
+	 * Define the abstract target that depends on the context.
+	 *
+	 * @param  string  $abstract
+	 * @return $this
+	 */
+	public function needs($abstract)
+	{
+		$this->needs = $abstract;
 
-    /**
-     * Define the implementation for the contextual binding.
-     *
-     * @param  \Closure|string  $implementation
-     * @return void
-     */
-    public function give($implementation)
-    {
-        $this->container->addContextualBinding($this->concrete, $this->needs, $implementation);
-    }
+		return $this;
+	}
+
+	/**
+	 * Define the implementation for the contextual binding.
+	 *
+	 * @param  \Closure|string  $implementation
+	 * @return void
+	 */
+	public function give($implementation)
+	{
+		$this->container->addContextualBinding($this->concrete, $this->needs, $implementation);
+	}
+
 }
