@@ -24,6 +24,7 @@
 			}
 
 			.content {
+				
 				text-align: center;
 				display: inline-block;
 			}
@@ -40,8 +41,8 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">503</div>
-				<div class="text">Database Error</div>
+				<div class="title">404</div>
+				<div class="text">Page Not Found</div>
 			</div>
 		</div>
 	</body>

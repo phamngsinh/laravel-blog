@@ -1,6 +1,9 @@
 <?php
 
 // Blog pages
+Route::get('server-error/{error}', function ($error) {
+    return view('errors.' . $error);
+});
 
 Route::get('/', 'PostController@index');
 Route::get('blog/{slug}', 'BlogController@showPost');

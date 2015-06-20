@@ -32,7 +32,7 @@
 				font-size: 120px;
 				margin-bottom: 40px;
 			}
-            .text{
+			.text{
 	           font-size: 48;
 			}
 		</style>
@@ -40,8 +40,8 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">503</div>
-				<div class="text">Database Error</div>
+				<div class="title">403</div>
+				<div class="text">Access Is Denied</div>
 			</div>
 		</div>
 	</body>
